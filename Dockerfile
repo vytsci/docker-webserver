@@ -4,7 +4,8 @@ COPY ./apache.conf /etc/apache2/sites-available/000-default.conf
 
 # Install selected extensions and other stuff
 RUN apt-get update \
-    && apt-get -y --no-install-recommends install php-memcached php-mysql php-bcmath php-gd php-intl \
+    && apt-get -y --no-install-recommends install php-memcached \
+    && docker-php-ext-install pdo pdo_mysql mysqli bcmath gd intl \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 # Install git
