@@ -21,9 +21,9 @@ RUN apt-get update \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 # Install & configure php extensions
-RUN docker-php-ext-install -j$(nproc) pdo pdo_mysql mysqli bcmath intl mbstring zip ldap \
+RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd
+    && docker-php-ext-install -j$(nproc) pdo_mysql mysqli bcmath intl mbstring zip ldap gd
 
 # Install & enable xdebug
 RUN pecl install xdebug-2.5.5 && docker-php-ext-enable xdebug
