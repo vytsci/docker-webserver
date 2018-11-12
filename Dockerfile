@@ -11,7 +11,8 @@ RUN apt-get update \
        libicu-dev \
        libaio-dev \
        libldb-dev \
-       libldap2-dev
+       libldap2-dev \
+       libxml2-dev
 
 ADD oracle-instantclient12.2-basic_12.2.0.1.0-2_amd64.deb /tmp/
 ADD oracle-instantclient12.2-devel_12.2.0.1.0-2_amd64.deb /tmp/
@@ -41,7 +42,7 @@ RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/usr,12.2 \
     && docker-php-ext-configure oci8 --with-oci8=instantclient,/usr/lib/oracle/12.2/client64/lib \
-    && docker-php-ext-install -j$(nproc) pdo_mysql pdo_oci mysqli oci8 bcmath intl mbstring mcrypt zip ldap gd
+    && docker-php-ext-install -j$(nproc) pdo_mysql pdo_oci mysqli oci8 bcmath intl mbstring mcrypt zip ldap gd soap
 
 # Install & enable PECL extensions
 RUN pecl install xdebug-2.5.5 && docker-php-ext-enable xdebug

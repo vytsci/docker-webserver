@@ -10,16 +10,16 @@ services:
     restart: always
 
   php71-apache:
-    image: vytsci/webserver:php7.1-apache-latest
+    image: vytsci/workstation:php7.1-apache-latest
     ports:
       - 80:80
     volumes:
-      - ./.docker/apache2/sites-available/000-vytsci.conf:/etc/apache2/sites-enabled/000-vytsci.conf
+      - ./.docker/apache2/sites-available/000-server.conf:/etc/apache2/sites-enabled/000-server.conf
       - ./.docker/php/7.1/php.ini:/usr/local/etc/php/php.ini
       - ./.docker/var/log/php/profiler:/var/log/php/profiler
-      - ./Projects/Web:/var/www/html
+      - ${PROJECTS_PATH}:/var/www/html
     environment:
-      XDEBUG_CONFIG: "remote_host=192.168.1.253 idekey=PHPSTORM"
+      XDEBUG_CONFIG: "remote_host=${HOST_IP} idekey=PHPSTORM"
     restart: always
 
   mysql57:
@@ -30,9 +30,9 @@ services:
       - ./.docker/mysql57/conf.d:/etc/mysql/conf.d
       - ./.docker/var/lib/mysql:/var/lib/mysql
     environment:
-      MYSQL_ROOT_HOST: 192.168.1.253
-      MYSQL_ROOT_PASSWORD: ko98po78
-      MYSQL_USER: vytsci
-      MYSQL_PASSWORD: vytsci1319
+      MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     restart: always
 
