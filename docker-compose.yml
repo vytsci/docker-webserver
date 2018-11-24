@@ -19,6 +19,7 @@ services:
       - ./.docker/var/log/php/profiler:/var/log/php/profiler
       - ${PROJECTS_PATH}:/var/www/html
     environment:
+      SERVER_NAME: ${SERVER_NAME}
       XDEBUG_CONFIG: "remote_host=${HOST_IP} idekey=PHPSTORM"
     restart: always
 
