@@ -13,6 +13,7 @@ RUN apt-get -y install libldb-dev
 RUN apt-get -y install libldap2-dev
 RUN apt-get -y install libxml2-dev
 RUN apt-get -y install git
+RUN apt-get -y install nano
 
 ADD oracle-instantclient12.2-basic_12.2.0.1.0-2_amd64.deb /tmp/
 ADD oracle-instantclient12.2-devel_12.2.0.1.0-2_amd64.deb /tmp/
@@ -40,9 +41,9 @@ RUN pecl install xdebug-2.5.5 && docker-php-ext-enable xdebug
 RUN pecl install apcu && docker-php-ext-enable apcu
 
 # Install OCI8
-ENV LD_LIBRARY_PATH "${LD_LIBRARY_PATH}:/usr/lib/oracle/12.2/client64/lib"
-ENV ORACLE_HOME "/usr/lib/oracle/12.2/client64"
-RUN echo "instantclient,/usr/lib/oracle/12.2/client64/lib" | pecl install -f oci8
+ENV ORACLE_BASE "/usr/lib/oracle"
+ENV ORACLE_HOME "$ORACLE_BASE/12.2/client64"
+ENV LD_LIBRARY_PATH "$ORACLE_HOME/lib"
 RUN docker-php-ext-configure oci8 --with-oci8=instantclient,/usr/lib/oracle/12.2/client64/lib
 RUN docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/usr,12.2
 RUN docker-php-ext-install -j$(nproc) oci8 pdo_oci
