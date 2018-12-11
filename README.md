@@ -1,6 +1,7 @@
 * Install docker and docker-compose
 * Copy .env.dist to .env and enter correct data
-* Build image with `docker build ./ -t yourname/workstation:php7.1-apache-latest`
-* Push image to your own hub channel `docker push yourname/workstation:php7.1-apache-latest`
-* Copy docker-compose.yml and .docker to you location.
+* Copy docker-compose.yml and .docker to your location (best is your home folder).
+* Add your user to docker group or use `sudo` for all docker commands
 * From that location run command `docker-compose up -d`
+
+Issues with database may occur due to weak passwords.
